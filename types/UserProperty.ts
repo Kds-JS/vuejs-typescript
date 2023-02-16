@@ -1,0 +1,1 @@
+export type UserProperty = 'name' | 'age'

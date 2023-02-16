@@ -25,7 +25,7 @@
 
 
   <div
-  v-for="item in items"
+  v-for="item in props.items"
   :key="item.id"
   >
 
@@ -33,12 +33,29 @@
     <span v-text="item.age"></span>
 
   </div>
+
+  <button 
+  @click="display('name')"
+  >
+    Display Name
+  </button>
+
+  <button
+   @click="display('age')"
+   >
+    Display Age
+  </button>
 </template>
 
 <script setup lang="ts">
 
+  import type { UserTypes } from 'types/User';
+  import type { UserProperty} from 'types/UserProperty';
   import { reactive, ref } from 'vue';
-  import type {UserTypes} from '../../types/User'
+  
+  const props = defineProps<{
+    items: UserTypes[],
+  }>();
 
   // const title: string = 'Hello World';
   // const subtitle: number | string  = 90;
@@ -61,18 +78,11 @@
     subTitle.value = editSubTitle;
   }
 
-  const items = ref<UserTypes[]>([
-    {
-      id: 1,
-      name: 'Nord',
-      age: 18
-    },
-    {
-      id: 2,
-      name: 'Kds',
-      age: 35
-    }
-  ]);
-
+  
+  const display = (property: UserProperty) => {
+    props.items.forEach((item: UserTypes) => {
+      console.log(item[property]);
+    });
+  }
 
 </script>
