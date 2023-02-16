@@ -1,40 +1,78 @@
-<script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
-</script>
-
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
-    </h3>
+  <h1
+  v-text="title" 
+  > 
+   
+  </h1>
+
+  <h2
+  v-text="subTitle" 
+  > 
+   
+  </h2>
+
+  <button
+  @click="editTitle('Hello World Edited')"
+  >
+    Editer title
+  </button>
+
+  <button
+  @click="editSubTitle('80')"
+  >
+    Editer subTitle
+  </button>
+
+
+  <div
+  v-for="item in items"
+  :key="item.id"
+  >
+
+    <span v-text="item.name"></span>
+    <span v-text="item.age"></span>
+
   </div>
 </template>
 
-<style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
-}
+<script setup lang="ts">
 
-h3 {
-  font-size: 1.2rem;
-}
+  import { reactive, ref } from 'vue';
+  import type {UserTypes} from '../../types/User'
 
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
+  // const title: string = 'Hello World';
+  // const subtitle: number | string  = 90;
 
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
+  // const state = reactive ( {
+  //   title: 'Hello World' as string,
+  //   subTitle: 90 as string | number,
+  // });
+
+  const title = ref<string>('Hello World');
+  const subTitle = ref<string | number>(90);
+
+  // console.log(title.value);
+
+  const editTitle = (editTitle : string) => {
+    title.value = editTitle;
   }
-}
-</style>
+
+  const editSubTitle = (editSubTitle : string | number) => {
+    subTitle.value = editSubTitle;
+  }
+
+  const items = ref<UserTypes[]>([
+    {
+      id: 1,
+      name: 'Nord',
+      age: 18
+    },
+    {
+      id: 2,
+      name: 'Kds',
+      age: 35
+    }
+  ]);
+
+
+</script>
